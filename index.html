@@ -2734,3 +2734,2052 @@ function searchBus(){
 
 </body>
 </html>
+
+```html
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NueGo Electric Bus | Smart Booking</title>
+
+<meta name="description"
+content="NueGo Electric Bus smart booking platform with routes, offers, trending routes and WhatsApp booking.">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+background:#f4f8f6;
+color:#10251c;
+}
+
+button,
+input,
+select{
+font-family:inherit;
+}
+
+button{
+cursor:pointer;
+border:none;
+}
+
+.topbar{
+background:#041d15;
+color:#fff;
+padding:9px 5%;
+display:flex;
+justify-content:space-between;
+font-size:13px;
+}
+
+.navbar{
+background:#fff;
+padding:14px 5%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:sticky;
+top:0;
+z-index:999;
+box-shadow:0 3px 20px rgba(0,0,0,.08);
+}
+
+.logo{
+font-size:27px;
+font-weight:900;
+color:#079447;
+}
+
+.logo span{
+display:block;
+font-size:9px;
+letter-spacing:4px;
+color:#111;
+margin-top:3px;
+}
+
+.navlinks{
+display:flex;
+gap:20px;
+align-items:center;
+}
+
+.navlinks a{
+text-decoration:none;
+font-weight:bold;
+color:#111;
+}
+
+.navlinks a:hover{
+color:#079447;
+}
+
+.admin-btn{
+background:#062c50;
+color:#fff;
+padding:11px 16px;
+border-radius:9px;
+font-weight:bold;
+}
+
+.hero{
+min-height:570px;
+display:flex;
+align-items:center;
+padding:70px 5%;
+
+background:
+linear-gradient(
+90deg,
+rgba(3,20,43,.94),
+rgba(3,20,43,.55)
+),
+url("https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=2000&q=90")
+center/cover;
+}
+
+.hero-content{
+max-width:700px;
+}
+
+.hero h1{
+font-size:48px;
+color:#fff;
+line-height:1.15;
+margin-bottom:18px;
+}
+
+.hero p{
+font-size:18px;
+color:#e8f3ff;
+line-height:1.7;
+margin-bottom:25px;
+}
+
+.hero-btn{
+background:#079447;
+color:#fff;
+padding:14px 24px;
+border-radius:10px;
+font-weight:bold;
+}
+
+.search-box{
+max-width:1100px;
+margin:-45px auto 35px;
+background:#fff;
+padding:22px;
+border-radius:18px;
+box-shadow:0 12px 35px rgba(0,0,0,.15);
+position:relative;
+}
+
+.search-grid{
+display:grid;
+grid-template-columns:1fr 1fr 180px 130px;
+gap:12px;
+}
+
+.field{
+border:1px solid #dce4eb;
+border-radius:11px;
+padding:11px;
+background:#fafcff;
+}
+
+.field label{
+display:block;
+font-size:11px;
+color:#718096;
+margin-bottom:5px;
+font-weight:bold;
+}
+
+.field input,
+.field select{
+width:100%;
+border:none;
+outline:none;
+background:transparent;
+font-size:15px;
+font-weight:bold;
+}
+
+.search-btn{
+background:#0876d1;
+color:white;
+border-radius:10px;
+font-weight:bold;
+}
+
+#status{
+margin-top:14px;
+font-weight:bold;
+color:#0876d1;
+}
+
+.container{
+max-width:1150px;
+margin:auto;
+padding:0 18px 50px;
+}
+
+.section-title{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin:28px 0 15px;
+}
+
+.section-title h2{
+font-size:25px;
+}
+
+.offer-box{
+background:linear-gradient(135deg,#fff,#e8fff3);
+border:1px solid #c8f2dc;
+border-radius:15px;
+padding:18px;
+line-height:1.6;
+}
+
+.route-count{
+color:#64748b;
+font-size:14px;
+}
+
+.routes{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+}
+
+.card{
+background:#fff;
+border-radius:17px;
+overflow:hidden;
+box-shadow:0 7px 22px rgba(23,32,51,.10);
+border:1px solid #e7edf3;
+}
+
+.bus-img{
+height:145px;
+background:
+url("https://images.unsplash.com/photo-1570125909517-53cb21c89ff2?auto=format&fit=crop&w=900&q=85")
+center/cover;
+}
+
+.card-body{
+padding:17px;
+}
+
+.badge{
+display:inline-block;
+background:#e7fff2;
+color:#087a45;
+padding:5px 9px;
+border-radius:20px;
+font-size:11px;
+font-weight:bold;
+margin:2px 3px 7px 0;
+}
+
+.trending{
+background:#fff1df;
+color:#b85c00;
+}
+
+.featured{
+background:#eee9ff;
+color:#5a35b0;
+}
+
+.route{
+font-size:19px;
+font-weight:900;
+margin-top:7px;
+}
+
+.arrow{
+color:#0876d1;
+margin:0 6px;
+}
+
+.meta{
+color:#687386;
+font-size:13px;
+line-height:1.8;
+margin:9px 0;
+}
+
+.price{
+display:flex;
+justify-content:space-between;
+align-items:end;
+margin-top:14px;
+}
+
+.old-price{
+text-decoration:line-through;
+color:#8994a5;
+font-size:13px;
+}
+
+.new-price{
+font-size:24px;
+font-weight:900;
+color:#0876d1;
+}
+
+.save{
+font-size:12px;
+font-weight:bold;
+color:#087a45;
+}
+
+.actions{
+display:flex;
+gap:8px;
+margin-top:14px;
+}
+
+.actions button{
+flex:1;
+padding:11px;
+border-radius:10px;
+font-weight:bold;
+color:#fff;
+background:#0876d1;
+}
+
+.actions .whatsapp{
+background:#18a957;
+}
+
+.empty{
+grid-column:1/-1;
+background:#fff;
+padding:30px;
+text-align:center;
+border-radius:15px;
+color:#64748b;
+}
+
+/* ADMIN */
+
+.admin-overlay{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.72);
+z-index:2000;
+padding:20px;
+}
+
+.admin-panel{
+background:#fff;
+max-width:1100px;
+height:94vh;
+overflow:auto;
+margin:auto;
+border-radius:18px;
+padding:22px;
+}
+
+.admin-header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:20px;
+}
+
+.close-btn{
+background:#edf1f5;
+padding:9px 13px;
+border-radius:8px;
+font-weight:bold;
+}
+
+.admin-form{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:12px;
+background:#f6f9fc;
+padding:18px;
+border-radius:14px;
+}
+
+.checkbox{
+display:flex;
+align-items:center;
+gap:8px;
+font-weight:bold;
+padding:10px;
+}
+
+.save-btn{
+background:#079447;
+color:white;
+padding:13px;
+border-radius:10px;
+font-weight:bold;
+}
+
+.reset-btn{
+background:#c62828;
+color:#fff;
+padding:12px;
+border-radius:10px;
+font-weight:bold;
+}
+
+.admin-table{
+width:100%;
+border-collapse:collapse;
+margin-top:22px;
+}
+
+.admin-table th,
+.admin-table td{
+padding:11px;
+border-bottom:1px solid #e5e7eb;
+text-align:left;
+font-size:13px;
+}
+
+.edit-btn{
+background:#0876d1;
+color:#fff;
+padding:7px 10px;
+border-radius:7px;
+}
+
+.delete-btn{
+background:#d62828;
+color:#fff;
+padding:7px 10px;
+border-radius:7px;
+}
+
+footer{
+background:#041d38;
+color:#dce8f7;
+text-align:center;
+padding:32px 15px;
+line-height:1.8;
+}
+
+.toast{
+position:fixed;
+right:20px;
+bottom:20px;
+background:#062c50;
+color:#fff;
+padding:14px 18px;
+border-radius:10px;
+display:none;
+z-index:5000;
+}
+
+/* MOBILE */
+
+@media(max-width:850px){
+
+.search-grid{
+grid-template-columns:1fr 1fr;
+}
+
+.routes{
+grid-template-columns:1fr 1fr;
+}
+
+.admin-form{
+grid-template-columns:1fr 1fr;
+}
+
+.hero h1{
+font-size:38px;
+}
+
+}
+
+@media(max-width:560px){
+
+.topbar{
+display:none;
+}
+
+.navbar{
+padding:13px 4%;
+}
+
+.navlinks a{
+display:none;
+}
+
+.hero{
+min-height:470px;
+padding:50px 5%;
+}
+
+.hero h1{
+font-size:32px;
+}
+
+.search-box{
+margin:0 12px 25px;
+}
+
+.search-grid,
+.routes,
+.admin-form{
+grid-template-columns:1fr;
+}
+
+.admin-panel{
+padding:15px;
+}
+
+.admin-table{
+font-size:11px;
+}
+
+.admin-table th,
+.admin-table td{
+padding:7px;
+}
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="topbar">
+
+<span>⚡ 100% Electric • Smart Travel Agent Booking</span>
+
+<span>📱 WhatsApp Booking Available</span>
+
+</div>
+
+
+<header class="navbar">
+
+<div class="logo">
+
+NueGo
+
+<span>ELECTRIC BUS</span>
+
+</div>
+
+
+<nav class="navlinks">
+
+<a href="#routes">Routes</a>
+
+<a href="#offers">Offers</a>
+
+<a href="#contact">Contact</a>
+
+<button class="admin-btn" onclick="openAdmin()">
+
+⚙️ Admin Settings
+
+</button>
+
+</nav>
+
+</header>
+
+
+<section class="hero">
+
+<div class="hero-content">
+
+<h1>
+Indiaभर की यात्रा,
+अब आसान और स्मार्ट
+</h1>
+
+<p>
+NueGo Electric Bus Smart Travel Agent Booking Demo.
+Route search, route-wise offers, trending routes,
+featured journeys और WhatsApp booking एक ही जगह।
+</p>
+
+<button class="hero-btn"
+onclick="document.getElementById('routes').scrollIntoView()">
+
+🚌 View Bus Routes
+
+</button>
+
+</div>
+
+</section>
+
+
+<section class="search-box">
+
+<div class="search-grid">
+
+
+<div class="field">
+
+<label>FROM</label>
+
+<select id="from"></select>
+
+</div>
+
+
+<div class="field">
+
+<label>TO</label>
+
+<select id="to"></select>
+
+</div>
+
+
+<div class="field">
+
+<label>JOURNEY DATE</label>
+
+<input
+type="date"
+id="date">
+
+</div>
+
+
+<button
+class="search-btn"
+onclick="searchRoutes()">
+
+Search Bus
+
+</button>
+
+
+</div>
+
+
+<div id="status"></div>
+
+</section>
+
+
+<main class="container">
+
+
+<section id="offers">
+
+<div class="section-title">
+
+<h2>🔥 Best & Trending Offers</h2>
+
+</div>
+
+
+<div class="offer-box">
+
+<b>💚 Special Online Offer:</b>
+
+आप Admin Settings में जाकर किसी भी route का
+fare, discount, offer label, pickup point,
+drop point और timing बदल सकते हैं।
+
+<br>
+
+🔥 Trending Route और ⭐ Featured Route भी
+आप खुद ON/OFF कर सकते हैं।
+
+</div>
+
+</section>
+
+
+<section id="routes">
+
+<div class="section-title">
+
+<h2>🚌 Bus Routes</h2>
+
+<span class="route-count" id="routeCount"></span>
+
+</div>
+
+
+<div class="routes" id="routeList"></div>
+
+</section>
+
+
+</main>
+
+
+<footer id="contact">
+
+<b>NueGo Electric Bus — Smart Booking Demo</b>
+
+<br>
+
+Route Search • Offers • Trending Routes • WhatsApp Booking
+
+<br><br>
+
+© 2026 NueGo Travel Agent Demo
+
+</footer>
+
+
+<!-- ADMIN PANEL -->
+
+
+<div class="admin-overlay" id="adminOverlay">
+
+
+<div class="admin-panel">
+
+
+<div class="admin-header">
+
+<div>
+
+<h2>⚙️ Admin Route & Offer Settings</h2>
+
+<small>
+Route और offer settings browser में save होंगी।
+</small>
+
+</div>
+
+
+<button
+class="close-btn"
+onclick="closeAdmin()">
+
+✕ Close
+
+</button>
+
+</div>
+
+
+<div class="admin-form">
+
+
+<div class="field">
+
+<label>FROM</label>
+
+<input
+id="adminFrom"
+placeholder="Agra">
+
+</div>
+
+
+<div class="field">
+
+<label>TO</label>
+
+<input
+id="adminTo"
+placeholder="Delhi">
+
+</div>
+
+
+<div class="field">
+
+<label>BASE FARE ₹</label>
+
+<input
+id="adminFare"
+type="number"
+placeholder="799">
+
+</div>
+
+
+<div class="field">
+
+<label>DISCOUNT %</label>
+
+<input
+id="adminDiscount"
+type="number"
+min="0"
+max="90"
+placeholder="10">
+
+</div>
+
+
+<div class="field">
+
+<label>OFFER LABEL</label>
+
+<input
+id="adminLabel"
+placeholder="10% ONLINE OFFER">
+
+</div>
+
+
+<div class="field">
+
+<label>BUS TIMING</label>
+
+<input
+id="adminTime"
+placeholder="08:00 PM">
+
+</div>
+
+
+<div class="field">
+
+<label>PICKUP POINT</label>
+
+<input
+id="adminPickup"
+placeholder="Kuberpur Pickup">
+
+</div>
+
+
+<div class="field">
+
+<label>DROP POINT</label>
+
+<input
+id="adminDrop"
+placeholder="Kashmiri Gate Drop">
+
+</div>
+
+
+<div class="field">
+
+<label>OFFER VALID UNTIL</label>
+
+<input
+id="adminUntil"
+type="date">
+
+</div>
+
+
+<label class="checkbox">
+
+<input
+id="adminTrending"
+type="checkbox">
+
+🔥 Trending Route
+
+</label>
+
+
+<label class="checkbox">
+
+<input
+id="adminFeatured"
+type="checkbox">
+
+⭐ Featured Route
+
+</label>
+
+
+<button
+class="save-btn"
+onclick="saveRoute()">
+
+💾 Save / Add Route
+
+</button>
+
+
+<button
+class="reset-btn"
+onclick="resetForm()">
+
+↻ Clear Form
+
+</button>
+
+
+</div>
+
+
+<table class="admin-table">
+
+<thead>
+
+<tr>
+
+<th>Route</th>
+
+<th>Fare</th>
+
+<th>Offer Price</th>
+
+<th>Tags</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="adminTable"></tbody>
+
+</table>
+
+
+</div>
+
+</div>
+
+
+<div
+class="toast"
+id="toast">
+</div>
+
+
+<script>
+
+
+const STORAGE_KEY =
+"nuego_smart_routes_v1";
+
+
+const defaultRoutes = [
+
+
+{
+id:1,
+from:"Agra",
+to:"Delhi",
+fare:799,
+discount:10,
+label:"10% ONLINE OFFER",
+pickup:"Kuberpur Pickup",
+drop:"Kashmiri Gate Drop",
+time:"08:00 AM",
+until:"",
+trending:true,
+featured:true
+},
+
+
+{
+id:2,
+from:"Agra",
+to:"Lucknow",
+fare:999,
+discount:10,
+label:"ONLINE DISCOUNT",
+pickup:"Agra ISBT Pickup",
+drop:"Lucknow Drop",
+time:"09:00 PM",
+until:"",
+trending:false,
+featured:true
+},
+
+
+{
+id:3,
+from:"Agra",
+to:"Jaipur",
+fare:899,
+discount:10,
+label:"10% ONLINE OFFER",
+pickup:"Agra Pickup",
+drop:"Jaipur Drop",
+time:"08:30 PM",
+until:"",
+trending:true,
+featured:false
+},
+
+
+{
+id:4,
+from:"Agra",
+to:"Gorakhpur",
+fare:1499,
+discount:10,
+label:"SPECIAL ONLINE OFFER",
+pickup:"Agra Pickup",
+drop:"Gorakhpur Drop",
+time:"09:20 PM",
+until:"",
+trending:true,
+featured:true
+},
+
+
+{
+id:5,
+from:"Agra",
+to:"Ayodhya",
+fare:1199,
+discount:10,
+label:"ONLINE OFFER",
+pickup:"Agra Pickup",
+drop:"Ayodhya Drop",
+time:"07:00 PM",
+until:"",
+trending:false,
+featured:false
+},
+
+
+{
+id:6,
+from:"Agra",
+to:"Vrindavan",
+fare:399,
+discount:10,
+label:"SPECIAL OFFER",
+pickup:"Agra Pickup",
+drop:"Vrindavan Drop",
+time:"06:30 AM",
+until:"",
+trending:true,
+featured:true
+},
+
+
+{
+id:7,
+from:"Delhi",
+to:"Varanasi",
+fare:1299,
+discount:10,
+label:"NEW ROUTE OFFER",
+pickup:"Kashmiri Gate Pickup",
+drop:"Varanasi Drop",
+time:"09:00 PM",
+until:"",
+trending:true,
+featured:true
+},
+
+
+{
+id:8,
+from:"Delhi",
+to:"Gorakhpur",
+fare:1499,
+discount:10,
+label:"NEW ROUTE OFFER",
+pickup:"Anand Vihar Pickup",
+drop:"Gorakhpur Drop",
+time:"08:30 PM",
+until:"",
+trending:true,
+featured:true
+},
+
+
+{
+id:9,
+from:"Delhi",
+to:"Lucknow",
+fare:899,
+discount:10,
+label:"ONLINE OFFER",
+pickup:"Anand Vihar Pickup",
+drop:"Lucknow Drop",
+time:"10:00 PM",
+until:"",
+trending:false,
+featured:false
+},
+
+
+{
+id:10,
+from:"Delhi",
+to:"Chandigarh",
+fare:799,
+discount:10,
+label:"TRENDING OFFER",
+pickup:"Kashmiri Gate Pickup",
+drop:"Chandigarh Drop",
+time:"07:00 AM",
+until:"",
+trending:true,
+featured:true
+},
+
+
+{
+id:11,
+from:"Delhi",
+to:"Dehradun",
+fare:699,
+discount:10,
+label:"ONLINE OFFER",
+pickup:"Delhi Pickup",
+drop:"Dehradun Drop",
+time:"08:00 AM",
+until:"",
+trending:false,
+featured:false
+},
+
+
+{
+id:12,
+from:"Delhi",
+to:"Haridwar",
+fare:599,
+discount:10,
+label:"ONLINE OFFER",
+pickup:"Delhi Pickup",
+drop:"Haridwar Drop",
+time:"07:30 AM",
+until:"",
+trending:false,
+featured:false
+},
+
+
+{
+id:13,
+from:"Jaipur",
+to:"Delhi",
+fare:899,
+discount:10,
+label:"ONLINE OFFER",
+pickup:"Jaipur Pickup",
+drop:"Delhi Drop",
+time:"09:00 AM",
+until:"",
+trending:true,
+featured:false
+},
+
+
+{
+id:14,
+from:"Bengaluru",
+to:"Chennai",
+fare:699,
+discount:10,
+label:"NEW ROUTE OFFER",
+pickup:"Bengaluru Pickup",
+drop:"Chennai Drop",
+time:"07:00 AM",
+until:"",
+trending:true,
+featured:true
+},
+
+
+{
+id:15,
+from:"Bengaluru",
+to:"Mysuru",
+fare:399,
+discount:10,
+label:"ONLINE OFFER",
+pickup:"Bengaluru Pickup",
+drop:"Mysuru Drop",
+time:"08:00 AM",
+until:"",
+trending:false,
+featured:false
+},
+
+
+{
+id:16,
+from:"Hyderabad",
+to:"Chennai",
+fare:999,
+discount:10,
+label:"NEW ROUTE OFFER",
+pickup:"Hyderabad Pickup",
+drop:"Chennai Drop",
+time:"08:00 PM",
+until:"",
+trending:true,
+featured:true
+},
+
+
+{
+id:17,
+from:"Hyderabad",
+to:"Vijayawada",
+fare:599,
+discount:10,
+label:"ONLINE OFFER",
+pickup:"Hyderabad Pickup",
+drop:"Vijayawada Drop",
+time:"07:00 AM",
+until:"",
+trending:false,
+featured:false
+},
+
+
+{
+id:18,
+from:"Vijayawada",
+to:"Visakhapatnam",
+fare:699,
+discount:10,
+label:"ONLINE OFFER",
+pickup:"Vijayawada Pickup",
+drop:"Visakhapatnam Drop",
+time:"09:00 AM",
+until:"",
+trending:false,
+featured:false
+},
+
+
+{
+id:19,
+from:"Bhopal",
+to:"Indore",
+fare:499,
+discount:10,
+label:"TRENDING OFFER",
+pickup:"Bhopal Pickup",
+drop:"Indore Drop",
+time:"08:00 AM",
+until:"",
+trending:true,
+featured:true
+},
+
+
+{
+id:20,
+from:"Bhopal",
+to:"Ujjain",
+fare:399,
+discount:10,
+label:"ONLINE OFFER",
+pickup:"Bhopal Pickup",
+drop:"Ujjain Drop",
+time:"09:00 AM",
+until:"",
+trending:false,
+featured:false
+},
+
+
+{
+id:21,
+from:"Chennai",
+to:"Pondicherry",
+fare:399,
+discount:10,
+label:"ONLINE OFFER",
+pickup:"Chennai Pickup",
+drop:"Pondicherry Drop",
+time:"07:00 AM",
+until:"",
+trending:false,
+featured:false
+},
+
+
+{
+id:22,
+from:"Chennai",
+to:"Tirupati",
+fare:699,
+discount:10,
+label:"ONLINE OFFER",
+pickup:"Chennai Pickup",
+drop:"Tirupati Drop",
+time:"06:30 AM",
+until:"",
+trending:false,
+featured:false
+},
+
+
+{
+id:23,
+from:"Chandigarh",
+to:"Delhi",
+fare:799,
+discount:10,
+label:"ONLINE OFFER",
+pickup:"Chandigarh Pickup",
+drop:"Delhi Drop",
+time:"08:00 AM",
+until:"",
+trending:false,
+featured:false
+},
+
+
+{
+id:24,
+from:"Haridwar",
+to:"Rishikesh",
+fare:299,
+discount:10,
+label:"SPECIAL OFFER",
+pickup:"Haridwar Pickup",
+drop:"Rishikesh Drop",
+time:"09:00 AM",
+until:"",
+trending:true,
+featured:false
+}
+
+];
+
+
+let routes =
+JSON.parse(
+localStorage.getItem(STORAGE_KEY)
+) || defaultRoutes;
+
+
+let editingId = null;
+
+
+function price(route){
+
+return Math.round(
+route.fare *
+(1-route.discount/100)
+);
+
+}
+
+
+function saveData(){
+
+localStorage.setItem(
+STORAGE_KEY,
+JSON.stringify(routes)
+);
+
+}
+
+
+function getCities(){
+
+let cities=[];
+
+routes.forEach(route=>{
+
+cities.push(route.from);
+cities.push(route.to);
+
+});
+
+return [...new Set(cities)].sort();
+
+}
+
+
+function fillSearch(){
+
+let cities=getCities();
+
+let from=document.getElementById("from");
+
+let to=document.getElementById("to");
+
+from.innerHTML=
+cities.map(c=>`<option>${c}</option>`).join("");
+
+to.innerHTML=
+cities.map(c=>`<option>${c}</option>`).join("");
+
+}
+
+
+function renderRoutes(data=routes){
+
+let list=
+document.getElementById("routeList");
+
+
+let sorted=
+[...data].sort((a,b)=>{
+
+if(a.trending!==b.trending)
+return b.trending-a.trending;
+
+return b.featured-a.featured;
+
+});
+
+
+if(sorted.length===0){
+
+list.innerHTML=
+`<div class="empty">
+इस route के लिए कोई bus नहीं मिली।
+</div>`;
+
+}
+
+else{
+
+list.innerHTML=
+sorted.map(route=>{
+
+let finalPrice=
+price(route);
+
+let saving=
+route.fare-finalPrice;
+
+
+return `
+
+<div class="card">
+
+<div class="bus-img"></div>
+
+<div class="card-body">
+
+
+${route.trending?
+`<span class="badge trending">
+🔥 TRENDING
+</span>`:""}
+
+
+${route.featured?
+`<span class="badge featured">
+⭐ FEATURED
+</span>`:""}
+
+
+<span class="badge">
+
+${route.label}
+
+</span>
+
+
+<div class="route">
+
+${route.from}
+
+<span class="arrow">→</span>
+
+${route.to}
+
+</div>
+
+
+<div class="meta">
+
+🕒 ${route.time}
+
+<br>
+
+📍 ${route.pickup}
+
+<br>
+
+📍 ${route.drop}
+
+</div>
+
+
+<div class="price">
+
+<div>
+
+<div class="old-price">
+
+₹${route.fare}
+
+</div>
+
+
+<div class="new-price">
+
+₹${finalPrice}
+
+</div>
+
+</div>
+
+
+<div class="save">
+
+Save ₹${saving}
+
+</div>
+
+</div>
+
+
+<div class="actions">
+
+<button
+onclick="bookNow(
+'${route.from}',
+'${route.to}',
+${finalPrice}
+)">
+
+Book Now
+
+</button>
+
+
+<button
+class="whatsapp"
+onclick="whatsappBooking(
+'${route.from}',
+'${route.to}',
+${finalPrice}
+)">
+
+WhatsApp
+
+</button>
+
+</div>
+
+
+</div>
+
+</div>
+
+`;
+
+}).join("");
+
+}
+
+
+document.getElementById("routeCount")
+.textContent=
+sorted.length+" Routes";
+
+
+}
+
+
+function searchRoutes(){
+
+let from=
+document.getElementById("from").value;
+
+let to=
+document.getElementById("to").value;
+
+
+let result=
+routes.filter(route=>
+
+route.from===from &&
+route.to===to
+
+);
+
+
+document.getElementById("status")
+.textContent=
+
+result.length
+
+?
+
+`✅ ${from} → ${to} के लिए ${result.length} bus option मिला।`
+
+:
+
+`ℹ️ ${from} → ${to} route अभी demo में उपलब्ध नहीं है।`;
+
+
+renderRoutes(result);
+
+}
+
+
+function bookNow(from,to,price){
+
+alert(
+
+`NueGo Bus Booking Request
+
+Route:
+${from} → ${to}
+
+Offer Price:
+₹${price}
+
+यह Demo Booking है।`
+
+);
+
+}
+
+
+function whatsappBooking(from,to,price){
+
+let message=
+encodeURIComponent(
+
+`NueGo Electric Bus Booking Request
+
+Route:
+${from} → ${to}
+
+Offer Price:
+₹${price}
+
+Booking के लिए passenger details भेजें।`
+
+);
+
+
+window.open(
+
+"https://wa.me/?text="+message,
+
+"_blank"
+
+);
+
+}
+
+
+/* ADMIN */
+
+
+function openAdmin(){
+
+document.getElementById(
+"adminOverlay"
+).style.display="block";
+
+renderAdmin();
+
+}
+
+
+function closeAdmin(){
+
+document.getElementById(
+"adminOverlay"
+).style.display="none";
+
+editingId=null;
+
+}
+
+
+function resetForm(){
+
+editingId=null;
+
+document.getElementById("adminFrom").value="";
+
+document.getElementById("adminTo").value="";
+
+document.getElementById("adminFare").value="";
+
+document.getElementById("adminDiscount").value="10";
+
+document.getElementById("adminLabel").value="";
+
+document.getElementById("adminTime").value="";
+
+document.getElementById("adminPickup").value="";
+
+document.getElementById("adminDrop").value="";
+
+document.getElementById("adminUntil").value="";
+
+document.getElementById("adminTrending").checked=false;
+
+document.getElementById("adminFeatured").checked=false;
+
+}
+
+
+function saveRoute(){
+
+let data={
+
+from:
+document.getElementById("adminFrom").value.trim(),
+
+to:
+document.getElementById("adminTo").value.trim(),
+
+fare:
+Number(document.getElementById("adminFare").value),
+
+discount:
+Number(document.getElementById("adminDiscount").value)||0,
+
+label:
+document.getElementById("adminLabel").value ||
+"ONLINE OFFER",
+
+time:
+document.getElementById("adminTime").value ||
+"Time TBD",
+
+pickup:
+document.getElementById("adminPickup").value ||
+"Pickup Point",
+
+drop:
+document.getElementById("adminDrop").value ||
+"Drop Point",
+
+until:
+document.getElementById("adminUntil").value,
+
+trending:
+document.getElementById("adminTrending").checked,
+
+featured:
+document.getElementById("adminFeatured").checked
+
+};
+
+
+if(!data.from ||
+!data.to ||
+!data.fare){
+
+alert(
+"From, To और Fare भरना जरूरी है।"
+);
+
+return;
+
+}
+
+
+if(editingId){
+
+let index=
+routes.findIndex(
+r=>r.id===editingId
+);
+
+routes[index]={
+...routes[index],
+...data
+};
+
+showToast(
+"Route successfully updated"
+);
+
+}
+
+else{
+
+data.id=
+Date.now();
+
+routes.push(data);
+
+showToast(
+"New route successfully added"
+);
+
+}
+
+
+saveData();
+
+fillSearch();
+
+renderRoutes();
+
+renderAdmin();
+
+resetForm();
+
+}
+
+
+function editRoute(id){
+
+let route=
+routes.find(
+r=>r.id===id
+);
+
+if(!route)return;
+
+
+editingId=id;
+
+
+document.getElementById(
+"adminFrom"
+).value=route.from;
+
+
+document.getElementById(
+"adminTo"
+).value=route.to;
+
+
+document.getElementById(
+"adminFare"
+).value=route.fare;
+
+
+document.getElementById(
+"adminDiscount"
+).value=route.discount;
+
+
+document.getElementById(
+"adminLabel"
+).value=route.label;
+
+
+document.getElementById(
+"adminTime"
+).value=route.time;
+
+
+document.getElementById(
+"adminPickup"
+).value=route.pickup;
+
+
+document.getElementById(
+"adminDrop"
+).value=route.drop;
+
+
+document.getElementById(
+"adminUntil"
+).value=route.until;
+
+
+document.getElementById(
+"adminTrending"
+).checked=
+route.trending;
+
+
+document.getElementById(
+"adminFeatured"
+).checked=
+route.featured;
+
+
+window.scrollTo(0,0);
+
+}
+
+
+function deleteRoute(id){
+
+if(
+confirm(
+"क्या आप यह route delete करना चाहते हैं?"
+)
+){
+
+routes=
+routes.filter(
+route=>route.id!==id
+);
+
+saveData();
+
+fillSearch();
+
+renderRoutes();
+
+renderAdmin();
+
+showToast(
+"Route deleted successfully"
+);
+
+}
+
+}
+
+
+function renderAdmin(){
+
+let table=
+document.getElementById(
+"adminTable"
+);
+
+
+table.innerHTML=
+routes.map(route=>{
+
+return `
+
+<tr>
+
+<td>
+
+<b>
+${route.from} → ${route.to}
+</b>
+
+<br>
+
+<small>
+
+${route.trending?
+"🔥 Trending ":""}
+
+${route.featured?
+"⭐ Featured":""}
+
+</small>
+
+</td>
+
+
+<td>
+
+₹${route.fare}
+
+</td>
+
+
+<td>
+
+${route.discount}%
+
+<br>
+
+<b>
+₹${price(route)}
+</b>
+
+</td>
+
+
+<td>
+
+${route.label}
+
+</td>
+
+
+<td>
+
+<button
+class="edit-btn"
+onclick="editRoute(${route.id})">
+
+Edit
+
+</button>
+
+
+<button
+class="delete-btn"
+onclick="deleteRoute(${route.id})">
+
+Delete
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+}).join("");
+
+}
+
+
+function showToast(message){
+
+let toast=
+document.getElementById("toast");
+
+toast.textContent=
+message;
+
+toast.style.display=
+"block";
+
+
+setTimeout(()=>{
+
+toast.style.display=
+"none";
+
+},2500);
+
+}
+
+
+/* INITIAL LOAD */
+
+
+document.getElementById(
+"date"
+).value=
+new Date()
+.toISOString()
+.slice(0,10);
+
+
+fillSearch();
+
+renderRoutes();
+
+
+</script>
+
+</body>
+</html>
+```
+
+
+
