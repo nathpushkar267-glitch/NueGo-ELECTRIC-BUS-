@@ -1,4 +1,1686 @@
 <!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>NueGo Electric Bus | Smart Booking</title>
+
+<meta name="description" content="NueGo Electric Bus - Modern online bus booking, routes, offers and WhatsApp booking.">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+body{
+background:#f4f8f6;
+color:#10251c;
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+button{
+font-family:inherit;
+}
+
+.topbar{
+background:#041d15;
+color:white;
+padding:10px 5%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+font-size:14px;
+}
+
+.navbar{
+background:white;
+padding:14px 5%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+position:sticky;
+top:0;
+z-index:999;
+box-shadow:0 3px 20px rgba(0,0,0,.08);
+}
+
+.logo{
+font-size:28px;
+font-weight:900;
+color:#079447;
+}
+
+.logo span{
+display:block;
+font-size:10px;
+letter-spacing:4px;
+color:#111;
+margin-top:3px;
+}
+
+.navlinks{
+display:flex;
+align-items:center;
+gap:25px;
+}
+
+.navlinks a{
+font-weight:bold;
+}
+
+.navlinks a:hover{
+color:#079447;
+}
+
+.nav-btn{
+background:#079447;
+color:white!important;
+padding:12px 18px;
+border-radius:10px;
+}
+
+.menu{
+display:none;
+font-size:28px;
+cursor:pointer;
+}
+
+/* HERO */
+
+.hero{
+min-height:650px;
+display:flex;
+align-items:center;
+padding:70px 5%;
+position:relative;
+overflow:hidden;
+
+background:
+linear-gradient(90deg,
+rgba(255,255,255,.98) 0%,
+rgba(255,255,255,.85) 35%,
+rgba(255,255,255,.15) 100%),
+url("https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=2000&q=90")
+center/cover;
+}
+
+.hero-content{
+max-width:680px;
+}
+
+.tag{
+display:inline-block;
+background:#e2f8ec;
+color:#078b42;
+padding:10px 18px;
+border-radius:50px;
+font-weight:bold;
+margin-bottom:20px;
+}
+
+.hero h1{
+font-size:70px;
+line-height:.95;
+color:#079447;
+}
+
+.hero h1 span{
+display:block;
+font-size:40px;
+color:#101010;
+margin-top:10px;
+}
+
+.hero p{
+font-size:21px;
+font-weight:bold;
+margin:25px 0;
+line-height:1.5;
+}
+
+.hero-buttons{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.primary-btn{
+background:#079447;
+color:white;
+padding:15px 25px;
+border-radius:10px;
+font-weight:bold;
+border:none;
+cursor:pointer;
+}
+
+.secondary-btn{
+background:white;
+color:#079447;
+padding:15px 25px;
+border-radius:10px;
+font-weight:bold;
+border:2px solid #079447;
+}
+
+.booking{
+max-width:1150px;
+margin:-60px auto 50px;
+position:relative;
+z-index:10;
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:0 15px 40px rgba(0,0,0,.15);
+}
+
+.booking h2{
+margin-bottom:20px;
+}
+
+.booking-grid{
+display:grid;
+grid-template-columns:1fr 1fr 1fr 1fr auto;
+gap:12px;
+}
+
+.field{
+border:1px solid #ddd;
+border-radius:10px;
+padding:12px;
+background:#fafafa;
+}
+
+.field label{
+font-size:11px;
+color:#777;
+display:block;
+margin-bottom:6px;
+font-weight:bold;
+}
+
+.field select,
+.field input{
+width:100%;
+border:none;
+background:none;
+outline:none;
+font-size:16px;
+font-weight:bold;
+}
+
+.search{
+background:#079447;
+color:white;
+border:none;
+padding:15px 22px;
+border-radius:10px;
+font-weight:bold;
+cursor:pointer;
+}
+
+/* SECTION */
+
+.section{
+max-width:1250px;
+margin:auto;
+padding:30px 5% 70px;
+}
+
+.title{
+font-size:32px;
+margin-bottom:25px;
+}
+
+.title span{
+color:#079447;
+}
+
+/* ROUTES */
+
+.routes{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:18px;
+}
+
+.route{
+background:white;
+border-radius:18px;
+overflow:hidden;
+box-shadow:0 5px 20px rgba(0,0,0,.08);
+transition:.3s;
+}
+
+.route:hover{
+transform:translateY(-8px);
+box-shadow:0 15px 35px rgba(0,0,0,.15);
+}
+
+.route img{
+width:100%;
+height:150px;
+object-fit:cover;
+}
+
+.route-content{
+padding:16px;
+}
+
+.route-content h3{
+margin-bottom:8px;
+}
+
+.route-content p{
+color:#777;
+font-size:13px;
+}
+
+.route-price{
+font-size:22px;
+color:#079447;
+font-weight:bold;
+margin:12px 0;
+}
+
+.book{
+display:block;
+text-align:center;
+background:#079447;
+color:white;
+padding:11px;
+border-radius:8px;
+font-weight:bold;
+}
+
+/* WHY */
+
+.why{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:15px;
+}
+
+.why-card{
+background:white;
+padding:25px 15px;
+text-align:center;
+border-radius:18px;
+box-shadow:0 5px 18px rgba(0,0,0,.06);
+}
+
+.why-icon{
+font-size:38px;
+margin-bottom:10px;
+}
+
+.why-card p{
+color:#666;
+font-size:14px;
+line-height:1.5;
+margin-top:8px;
+}
+
+/* OFFERS */
+
+.offers{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
+.offer{
+background:linear-gradient(135deg,#06251b,#079447);
+color:white;
+padding:30px;
+border-radius:20px;
+position:relative;
+overflow:hidden;
+}
+
+.offer:after{
+content:"⚡";
+position:absolute;
+right:20px;
+bottom:0;
+font-size:80px;
+opacity:.15;
+}
+
+.offer h2{
+margin-bottom:10px;
+}
+
+.offer-price{
+font-size:38px;
+font-weight:900;
+margin:15px 0;
+}
+
+.offer p{
+margin-bottom:20px;
+}
+
+.offer-btn{
+display:inline-block;
+background:white;
+color:#079447;
+padding:12px 20px;
+border-radius:8px;
+font-weight:bold;
+}
+
+/* STATS */
+
+.stats{
+background:#041d15;
+color:white;
+display:grid;
+grid-template-columns:repeat(4,1fr);
+text-align:center;
+padding:40px 5%;
+gap:20px;
+}
+
+.stat h2{
+color:#45e28a;
+font-size:38px;
+}
+
+/* LANGUAGE */
+
+.language-box{
+background:white;
+padding:30px;
+border-radius:20px;
+box-shadow:0 5px 20px rgba(0,0,0,.07);
+}
+
+.language-box textarea{
+width:100%;
+height:120px;
+padding:15px;
+border:1px solid #ddd;
+border-radius:10px;
+margin:15px 0;
+resize:vertical;
+}
+
+.language-row{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+}
+
+.language-row select{
+padding:13px;
+border:1px solid #ddd;
+border-radius:10px;
+}
+
+/* ADMIN */
+
+.admin{
+background:#071b14;
+color:white;
+padding:40px 5%;
+}
+
+.admin-box{
+max-width:1000px;
+margin:auto;
+}
+
+.admin h2{
+color:#45e28a;
+margin-bottom:10px;
+}
+
+.admin-grid{
+display:grid;
+grid-template-columns:1fr 1fr 1fr;
+gap:15px;
+margin-top:20px;
+}
+
+.admin-field{
+display:flex;
+flex-direction:column;
+gap:7px;
+}
+
+.admin-field label{
+font-size:13px;
+color:#b8c7bf;
+}
+
+.admin-field input{
+padding:12px;
+border-radius:8px;
+border:none;
+outline:none;
+}
+
+.save-settings{
+margin-top:20px;
+background:#45e28a;
+color:#041d15;
+border:none;
+padding:14px 25px;
+border-radius:8px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.reset-settings{
+margin-left:10px;
+background:#333;
+color:white;
+border:none;
+padding:14px 25px;
+border-radius:8px;
+cursor:pointer;
+}
+
+/* FOOTER */
+
+footer{
+background:#071b14;
+color:white;
+padding:50px 5% 25px;
+}
+
+.footer-grid{
+max-width:1200px;
+margin:auto;
+display:grid;
+grid-template-columns:2fr 1fr 1fr 1.5fr;
+gap:40px;
+}
+
+footer h2{
+color:#45e28a;
+margin-bottom:15px;
+}
+
+footer h3{
+margin-bottom:15px;
+}
+
+footer p,
+footer li{
+color:#b8c7bf;
+line-height:2;
+}
+
+footer ul{
+list-style:none;
+}
+
+.copy{
+border-top:1px solid #294036;
+text-align:center;
+margin-top:30px;
+padding-top:20px;
+color:#9aaba2;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+.topbar{
+display:none;
+}
+
+.menu{
+display:block;
+}
+
+.navlinks{
+display:none;
+position:absolute;
+top:65px;
+left:0;
+width:100%;
+background:white;
+padding:25px;
+flex-direction:column;
+}
+
+.navlinks.show{
+display:flex;
+}
+
+.hero{
+min-height:600px;
+background:
+linear-gradient(rgba(255,255,255,.9),rgba(255,255,255,.9)),
+url("https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=1200&q=90")
+center/cover;
+}
+
+.hero h1{
+font-size:50px;
+}
+
+.booking-grid{
+grid-template-columns:1fr;
+}
+
+.routes{
+grid-template-columns:1fr 1fr;
+}
+
+.why{
+grid-template-columns:1fr 1fr;
+}
+
+.offers{
+grid-template-columns:1fr;
+}
+
+.admin-grid{
+grid-template-columns:1fr 1fr;
+}
+
+.footer-grid{
+grid-template-columns:1fr 1fr;
+}
+
+}
+
+@media(max-width:500px){
+
+.hero h1{
+font-size:42px;
+}
+
+.hero h1 span{
+font-size:28px;
+}
+
+.routes,
+.why,
+.admin-grid,
+.footer-grid{
+grid-template-columns:1fr;
+}
+
+.stats{
+grid-template-columns:1fr 1fr;
+}
+
+.language-row{
+grid-template-columns:1fr;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- TOPBAR -->
+
+<div class="topbar">
+<div>
+🌿 Go Green &nbsp; ⚡ Electric AC Bus &nbsp; 🛡️ Safe Travel
+</div>
+
+<div>
+📞 <span id="topPhone">89572 869 40</span>
+</div>
+</div>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+<a href="#" class="logo">
+NueGo
+<span>ELECTRIC BUS</span>
+</a>
+
+<div class="menu" onclick="toggleMenu()">☰</div>
+
+<div class="navlinks" id="navlinks">
+
+<a href="#home">Home</a>
+<a href="#routes">Routes</a>
+<a href="#offers">Offers</a>
+<a href="#language">Language</a>
+<a href="#settings">Settings</a>
+
+<a class="nav-btn"
+id="navWhatsapp"
+href="#"
+target="_blank">
+💬 WhatsApp Booking
+</a>
+
+</div>
+
+</nav>
+
+
+<!-- HERO -->
+
+<section class="hero" id="home">
+
+<div class="hero-content">
+
+<div class="tag">
+🌿 SMART • CLEAN • ELECTRIC
+</div>
+
+<h1>
+NueGo
+<span>ELECTRIC BUS</span>
+</h1>
+
+<p>
+आपका सफर अब और भी आरामदायक, सुरक्षित और स्मार्ट।<br>
+Book your journey with modern electric mobility.
+</p>
+
+<div class="hero-buttons">
+
+<a href="#booking" class="primary-btn">
+🔍 Search Bus
+</a>
+
+<a href="#" id="heroWhatsapp" class="secondary-btn">
+💬 WhatsApp Booking
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- BOOKING -->
+
+<section class="booking" id="booking">
+
+<h2>🚌 Find Your Perfect Bus Journey</h2>
+
+<div class="booking-grid">
+
+<div class="field">
+<label>FROM</label>
+
+<select id="from">
+<option>Agra</option>
+<option>Delhi</option>
+<option>Jaipur</option>
+<option>Lucknow</option>
+<option>Gorakhpur</option>
+<option>Ayodhya</option>
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>TO</label>
+
+<select id="to">
+<option>Delhi</option>
+<option>Agra</option>
+<option>Lucknow</option>
+<option>Jaipur</option>
+<option>Gorakhpur</option>
+<option>Ayodhya</option>
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>JOURNEY DATE</label>
+
+<input type="date" id="date">
+
+</div>
+
+
+<div class="field">
+
+<label>PASSENGERS</label>
+
+<select id="passengers">
+<option>1 Passenger</option>
+<option>2 Passengers</option>
+<option>3 Passengers</option>
+<option>4 Passengers</option>
+<option>5 Passengers</option>
+</select>
+
+</div>
+
+
+<button class="search" onclick="searchBus()">
+🔍 Search
+</button>
+
+</div>
+
+</section>
+
+
+<!-- ROUTES -->
+
+<section class="section" id="routes">
+
+<h2 class="title">
+🔥 Popular <span>Routes</span>
+</h2>
+
+<div class="routes">
+
+<div class="route">
+
+<img id="busImage1"
+src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=90">
+
+<div class="route-content">
+
+<h3>Agra → Delhi</h3>
+
+<p>⚡ Electric AC Bus</p>
+
+<div class="route-price">
+₹799
+</div>
+
+<a class="book" href="#" onclick="routeBook('Agra','Delhi')">
+Book Now
+</a>
+
+</div>
+
+</div>
+
+
+<div class="route">
+
+<img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=90">
+
+<div class="route-content">
+
+<h3>Agra → Lucknow</h3>
+
+<p>⚡ Electric AC Bus</p>
+
+<div class="route-price">
+₹899
+</div>
+
+<a class="book" href="#" onclick="routeBook('Agra','Lucknow')">
+Book Now
+</a>
+
+</div>
+
+</div>
+
+
+<div class="route">
+
+<img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=90">
+
+<div class="route-content">
+
+<h3>Agra → Jaipur</h3>
+
+<p>⚡ Electric AC Bus</p>
+
+<div class="route-price">
+₹999
+</div>
+
+<a class="book" href="#" onclick="routeBook('Agra','Jaipur')">
+Book Now
+</a>
+
+</div>
+
+</div>
+
+
+<div class="route">
+
+<img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=90">
+
+<div class="route-content">
+
+<h3>Agra → Gorakhpur</h3>
+
+<p>⚡ Electric AC Bus</p>
+
+<div class="route-price">
+₹1299
+</div>
+
+<a class="book" href="#" onclick="routeBook('Agra','Gorakhpur')">
+Book Now
+</a>
+
+</div>
+
+</div>
+
+
+<div class="route">
+
+<img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=90">
+
+<div class="route-content">
+
+<h3>Agra → Ayodhya</h3>
+
+<p>⚡ Electric AC Bus</p>
+
+<div class="route-price">
+₹1199
+</div>
+
+<a class="book" href="#" onclick="routeBook('Agra','Ayodhya')">
+Book Now
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- OFFERS -->
+
+<section class="section" id="offers">
+
+<h2 class="title">
+🎁 Special <span>Offers</span>
+</h2>
+
+<div class="offers">
+
+<div class="offer">
+
+<h2 id="offerTitle">
+Online Booking Offer
+</h2>
+
+<div class="offer-price" id="offerPrice">
+10% OFF
+</div>
+
+<p id="offerText">
+Online booking par special discount paayein.
+</p>
+
+<a href="#" class="offer-btn" onclick="offerBook()">
+Book & Save
+</a>
+
+</div>
+
+
+<div class="offer">
+
+<h2>
+💬 WhatsApp Booking
+</h2>
+
+<div class="offer-price">
+24×7
+</div>
+
+<p>
+WhatsApp par message karke booking assistance paayein.
+</p>
+
+<a href="#" id="offerWhatsapp" class="offer-btn">
+WhatsApp Now
+</a>
+
+</div>
+
+
+<div class="offer">
+
+<h2>
+📞 Call Booking
+</h2>
+
+<div class="offer-price">
+Call Now
+</div>
+
+<p>
+Booking ke liye hamare travel expert se baat karein.
+</p>
+
+<a href="#" id="callButton" class="offer-btn">
+Call Now
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- WHY -->
+
+<section class="section">
+
+<h2 class="title">
+⭐ Why Choose <span>NueGo?</span>
+</h2>
+
+<div class="why">
+
+<div class="why-card">
+<div class="why-icon">⚡</div>
+<h3>Electric Power</h3>
+<p>Modern clean electric mobility.</p>
+</div>
+
+<div class="why-card">
+<div class="why-icon">💺</div>
+<h3>Premium Comfort</h3>
+<p>Comfortable AC journey.</p>
+</div>
+
+<div class="why-card">
+<div class="why-icon">🛡️</div>
+<h3>Safety First</h3>
+<p>Safe and reliable travel.</p>
+</div>
+
+<div class="why-card">
+<div class="why-icon">🌿</div>
+<h3>Eco Friendly</h3>
+<p>Cleaner travel for a greener future.</p>
+</div>
+
+<div class="why-card">
+<div class="why-icon">⭐</div>
+<h3>Trusted Service</h3>
+<p>Better service for every journey.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- LANGUAGE -->
+
+<section class="section" id="language">
+
+<h2 class="title">
+🌍 <span>Multi-Language</span> Message Assistant
+</h2>
+
+<div class="language-box">
+
+<p>
+ग्राहक का message यहाँ paste करें। नीचे language चुनकर translation तैयार करें।
+</p>
+
+<textarea id="messageText"
+placeholder="Customer ka message yahan paste karein..."></textarea>
+
+<div class="language-row">
+
+<select id="sourceLang">
+<option value="auto">Auto Detect</option>
+<option value="en">English</option>
+<option value="hi">Hindi</option>
+<option value="bn">Bengali</option>
+<option value="mr">Marathi</option>
+<option value="gu">Gujarati</option>
+<option value="pa">Punjabi</option>
+<option value="ta">Tamil</option>
+<option value="te">Telugu</option>
+</select>
+
+<select id="targetLang">
+<option value="hi">Hindi</option>
+<option value="en">English</option>
+<option value="bn">Bengali</option>
+<option value="mr">Marathi</option>
+<option value="gu">Gujarati</option>
+<option value="pa">Punjabi</option>
+<option value="ta">Tamil</option>
+<option value="te">Telugu</option>
+</select>
+
+</div>
+
+<br>
+
+<button class="primary-btn" onclick="translateMessage()">
+🌍 Translate
+</button>
+
+<br><br>
+
+<textarea id="translatedText"
+placeholder="Translation yahan dikhega..." readonly></textarea>
+
+</div>
+
+</section>
+
+
+<!-- STATS -->
+
+<section class="stats">
+
+<div class="stat">
+<h2>100%</h2>
+<p>Electric Mobility</p>
+</div>
+
+<div class="stat">
+<h2>24×7</h2>
+<p>Booking Support</p>
+</div>
+
+<div class="stat">
+<h2>50+</h2>
+<p>Destinations</p>
+</div>
+
+<div class="stat">
+<h2>⭐ 4.8</h2>
+<p>Customer Experience</p>
+</div>
+
+</section>
+
+
+<!-- ADMIN SETTINGS -->
+
+<section class="admin" id="settings">
+
+<div class="admin-box">
+
+<h2>⚙️ Website Settings</h2>
+
+<p>
+यहाँ से आप अपनी वेबसाइट की जरूरी जानकारी खुद बदल सकते हैं।
+</p>
+
+<div class="admin-grid">
+
+<div class="admin-field">
+<label>WhatsApp Number</label>
+<input id="settingPhone" value="8957286940">
+</div>
+
+<div class="admin-field">
+<label>Offer Title</label>
+<input id="settingOfferTitle" value="Online Booking Offer">
+</div>
+
+<div class="admin-field">
+<label>Offer Price / Discount</label>
+<input id="settingOfferPrice" value="10% OFF">
+</div>
+
+<div class="admin-field">
+<label>Offer Description</label>
+<input id="settingOfferText" value="Online booking par special discount paayein.">
+</div>
+
+<div class="admin-field">
+<label>Bus Image URL</label>
+<input id="settingBusImage" value="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=90">
+</div>
+
+<div class="admin-field">
+<label>Hero Bus Image URL</label>
+<input id="settingHeroImage" value="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=2000&q=90">
+</div>
+
+</div>
+
+<button class="save-settings" onclick="saveSettings()">
+💾 Save Settings
+</button>
+
+<button class="reset-settings" onclick="resetSettings()">
+Reset
+</button>
+
+<p id="saveMessage" style="margin-top:15px;color:#45e28a;"></p>
+
+</div>
+
+</section>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="footer-grid">
+
+<div>
+
+<h2>NueGo</h2>
+
+<h3>ELECTRIC BUS</h3>
+
+<p>
+Safe, comfortable and smart electric bus travel.
+Book your journey easily through WhatsApp.
+</p>
+
+</div>
+
+
+<div>
+
+<h3>Quick Links</h3>
+
+<ul>
+
+<li><a href="#home">Home</a></li>
+
+<li><a href="#routes">Routes</a></li>
+
+<li><a href="#offers">Offers</a></li>
+
+<li><a href="#booking">Booking</a></li>
+
+</ul>
+
+</div>
+
+
+<div>
+
+<h3>Popular Routes</h3>
+
+<ul>
+
+<li>Agra → Delhi</li>
+
+<li>Agra → Lucknow</li>
+
+<li>Agra → Jaipur</li>
+
+<li>Agra → Gorakhpur</li>
+
+<li>Agra → Ayodhya</li>
+
+</ul>
+
+</div>
+
+
+<div>
+
+<h3>Contact</h3>
+
+<p>
+📞 <span id="footerPhone">89572 869 40</span>
+</p>
+
+<p>
+💬 WhatsApp Booking
+</p>
+
+<p>
+🕒 24×7 Support
+</p>
+
+</div>
+
+</div>
+
+
+<div class="copy">
+
+© 2026 NueGo Electric Bus. All Rights Reserved.
+
+</div>
+
+</footer>
+
+
+<script>
+
+/* DEFAULT SETTINGS */
+
+const defaultSettings = {
+
+phone:"8957286940",
+
+offerTitle:"Online Booking Offer",
+
+offerPrice:"10% OFF",
+
+offerText:"Online booking par special discount paayein.",
+
+busImage:"https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=90",
+
+heroImage:"https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=2000&q=90"
+
+};
+
+
+/* LOAD SETTINGS */
+
+function loadSettings(){
+
+let saved =
+localStorage.getItem("nuegoSettings");
+
+let settings =
+saved ? JSON.parse(saved) : defaultSettings;
+
+
+document.getElementById("settingPhone").value =
+settings.phone;
+
+document.getElementById("settingOfferTitle").value =
+settings.offerTitle;
+
+document.getElementById("settingOfferPrice").value =
+settings.offerPrice;
+
+document.getElementById("settingOfferText").value =
+settings.offerText;
+
+document.getElementById("settingBusImage").value =
+settings.busImage;
+
+document.getElementById("settingHeroImage").value =
+settings.heroImage;
+
+
+applySettings(settings);
+
+}
+
+
+/* APPLY SETTINGS */
+
+function applySettings(settings){
+
+let phone =
+settings.phone.replace(/\D/g,"");
+
+
+let whatsapp =
+"https://wa.me/91" +
+phone;
+
+
+document.getElementById("topPhone").innerText =
+settings.phone;
+
+document.getElementById("footerPhone").innerText =
+settings.phone;
+
+
+document.getElementById("navWhatsapp").href =
+whatsapp;
+
+document.getElementById("heroWhatsapp").href =
+whatsapp;
+
+document.getElementById("offerWhatsapp").href =
+whatsapp;
+
+document.getElementById("callButton").href =
+"tel:+91" + phone;
+
+
+document.getElementById("offerTitle").innerText =
+settings.offerTitle;
+
+document.getElementById("offerPrice").innerText =
+settings.offerPrice;
+
+document.getElementById("offerText").innerText =
+settings.offerText;
+
+
+/* BUS IMAGES */
+
+document.querySelectorAll(".route img")
+.forEach(function(img){
+
+img.src =
+settings.busImage;
+
+});
+
+
+/* HERO IMAGE */
+
+document.querySelector(".hero").style.backgroundImage =
+
+"linear-gradient(90deg,rgba(255,255,255,.98) 0%,rgba(255,255,255,.85) 35%,rgba(255,255,255,.15) 100%),url('" +
+
+settings.heroImage +
+
+"')";
+
+}
+
+
+/* SAVE SETTINGS */
+
+function saveSettings(){
+
+let settings = {
+
+phone:
+document.getElementById("settingPhone").value,
+
+offerTitle:
+document.getElementById("settingOfferTitle").value,
+
+offerPrice:
+document.getElementById("settingOfferPrice").value,
+
+offerText:
+document.getElementById("settingOfferText").value,
+
+busImage:
+document.getElementById("settingBusImage").value,
+
+heroImage:
+document.getElementById("settingHeroImage").value
+
+};
+
+
+localStorage.setItem(
+"nuegoSettings",
+JSON.stringify(settings)
+);
+
+
+applySettings(settings);
+
+
+document.getElementById("saveMessage").innerText =
+"✅ Settings successfully saved!";
+
+
+setTimeout(function(){
+
+document.getElementById("saveMessage").innerText = "";
+
+},3000);
+
+}
+
+
+/* RESET */
+
+function resetSettings(){
+
+localStorage.removeItem("nuegoSettings");
+
+loadSettings();
+
+alert("Settings reset successfully.");
+
+}
+
+
+/* MENU */
+
+function toggleMenu(){
+
+document
+.getElementById("navlinks")
+.classList
+.toggle("show");
+
+}
+
+
+/* SEARCH BUS */
+
+function searchBus(){
+
+let from =
+document.getElementById("from").value;
+
+let to =
+document.getElementById("to").value;
+
+let date =
+document.getElementById("date").value;
+
+let passengers =
+document.getElementById("passengers").value;
+
+
+if(!date){
+
+alert("Please select journey date.");
+
+return;
+
+}
+
+
+let settings =
+JSON.parse(
+localStorage.getItem("nuegoSettings")
+) || defaultSettings;
+
+
+let message =
+
+"Hello NueGo Electric Bus,%0A%0A" +
+
+"I want to book a bus ticket.%0A%0A" +
+
+"From: " + from + "%0A" +
+
+"To: " + to + "%0A" +
+
+"Journey Date: " + date + "%0A" +
+
+"Passengers: " + passengers;
+
+
+window.open(
+
+"https://wa.me/91" +
+
+settings.phone.replace(/\D/g,"") +
+
+"?text=" +
+
+message,
+
+"_blank"
+
+);
+
+}
+
+
+/* ROUTE BOOKING */
+
+function routeBook(from,to){
+
+let settings =
+JSON.parse(
+localStorage.getItem("nuegoSettings")
+) || defaultSettings;
+
+
+let message =
+
+"Hello NueGo Electric Bus,%0A%0A" +
+
+"I want to book:%0A" +
+
+"From: " + from + "%0A" +
+
+"To: " + to;
+
+
+window.open(
+
+"https://wa.me/91" +
+
+settings.phone.replace(/\D/g,"") +
+
+"?text=" +
+
+message,
+
+"_blank"
+
+);
+
+}
+
+
+/* OFFER BOOKING */
+
+function offerBook(){
+
+let settings =
+JSON.parse(
+localStorage.getItem("nuegoSettings")
+) || defaultSettings;
+
+
+let message =
+
+"Hello NueGo Electric Bus,%0A%0A" +
+
+"I want to book using this offer:%0A" +
+
+settings.offerPrice;
+
+
+window.open(
+
+"https://wa.me/91" +
+
+settings.phone.replace(/\D/g,"") +
+
+"?text=" +
+
+message,
+
+"_blank"
+
+);
+
+}
+
+
+/* TRANSLATION */
+
+function translateMessage(){
+
+let text =
+document.getElementById("messageText").value;
+
+let source =
+document.getElementById("sourceLang").value;
+
+let target =
+document.getElementById("targetLang").value;
+
+
+if(!text){
+
+alert("Please enter a message.");
+
+return;
+
+}
+
+
+/*
+Demo Translation Assistant.
+
+Real automatic translation ke liye
+Google Translate API ya DeepL API
+backend ke through connect karna hoga.
+*/
+
+if(target === "hi"){
+
+document.getElementById("translatedText").value =
+
+"यह ग्राहक का संदेश है:\n\n" +
+
+text +
+
+"\n\n⚠️ Automatic translation API connect करने के बाद यहाँ Hindi translation दिखाई जाएगी.";
+
+}
+
+else{
+
+document.getElementById("translatedText").value =
+
+text +
+
+"\n\n⚠️ Automatic translation API connect करने के बाद यहाँ selected language में translation दिखाई जाएगी.";
+
+}
+
+}
+
+
+/* START */
+
+window.onload = function(){
+
+loadSettings();
+
+};
+
+</script>
+
+</body>
+</html>
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
