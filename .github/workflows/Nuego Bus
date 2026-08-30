@@ -1,0 +1,594 @@
+<!doctype html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<!-- Google Analytics (GA4) — apna Measurement ID neeche daalein (G-XXXXXXXXXX) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-XXXXXXXXXX');
+</script>
+<title>NUEGO — Ticket Book & Bargain</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f5f1e8;color:#17372f;font-family:Arial,sans-serif}
+header{background:linear-gradient(135deg,#0d352b,#17634e);color:#fff;padding:24px 18px 55px}
+.wrap{max-width:620px;margin:auto}
+.brand{font-size:28px;font-weight:900}.brand span{color:#f2b84b}
+header h1{font-size:clamp(20px,4vw,28px);margin:16px 0 6px}header p{color:#d8ebe5;margin:0;font-size:14px}
+.card{background:#fff;border:1px solid #ddd5c7;border-radius:18px;padding:22px;margin:-38px auto 25px;box-shadow:0 12px 30px #17372f16}
+.busbox{border:1px solid #e0d8ca;border-radius:14px;padding:16px;background:#faf8f2}
+.busbox h3{margin:0 0 4px}
+.muted{color:#6d7c77;font-size:13px}
+.pricebox{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.fare{font-size:26px;font-weight:900;color:#0d352b}
+.fare.strike{font-size:15px;color:#a3a3a3;text-decoration:line-through;font-weight:700;margin-right:8px}
+.panel{border:1px solid #e0d8ca;border-radius:14px;padding:18px;margin-top:18px}
+label{display:block;font-size:12px;font-weight:800;color:#536a63;margin-bottom:6px}
+input,select,textarea{width:100%;padding:11px;border:1px solid #d5cdbf;border-radius:9px;font-size:14px;background:#fff;font-family:Arial}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn{border:0;border-radius:9px;padding:13px 16px;font-weight:800;cursor:pointer;font-size:14px;width:100%}
+.green{background:#123f33;color:#fff}.gold{background:#f2b84b;color:#17372f}.ghost{background:#eaf0ec;color:#17372f}
+.bargainToggle{display:flex;align-items:center;gap:10px;background:#fdf3e0;border:1px dashed #f2b84b;border-radius:12px;padding:12px;margin-top:16px;cursor:pointer}
+.bargainToggle b{font-size:14px}
+.hidden{display:none!important}
+.success{background:#eaf7ef;border:1px solid #c9e6d4;padding:14px;border-radius:10px;margin-top:14px;font-size:13px}
+.tag{display:inline-block;background:#eaf0ec;border-radius:20px;padding:4px 10px;font-size:11px;font-weight:800;margin-right:6px}
+.slider-row{display:flex;justify-content:space-between;font-size:12px;color:#687873;margin-top:4px}
+</style></head><body>
+
+<header><div class="wrap">
+<div class="brand">NUE<span>GO</span></div>
+<h1>Ticket Book Karein & Bargain Karein</h1>
+<p>Apna offer price bataiye, seedha bus operator se WhatsApp par baat karein.</p>
+</div></header>
+
+<div class="wrap"><div class="card">
+
+<div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+<button class="btn gold" id="tabCustomerBtn" onclick="showView('customer')" style="width:auto;padding:10px 16px">Customer Booking</button>
+<button class="btn ghost" id="tabRouteBtn" onclick="showView('routes')" style="width:auto;padding:10px 16px">🛣 Route Manager (Admin)</button>
+<button class="btn ghost" id="tabAdminBtn" onclick="showView('admin')" style="width:auto;padding:10px 16px">📋 Saved Inquiries (Admin)</button>
+</div>
+
+<div id="customerView">
+
+<div id="loginGate" class="panel">
+<h3>👤 Customer Login</h3>
+<p class="muted">Apna mobile number daalein — agar pehle booking ki hai, naam apne aap aa jaayega.</p>
+<div class="grid">
+<div><label>MOBILE NUMBER</label><input id="loginMobile" maxlength="10" inputmode="numeric" placeholder="10 digit mobile"></div>
+<div id="loginNameBox" class="hidden"><label>AAPKA NAAM (naya customer)</label><input id="loginName" placeholder="Naam likhein"></div>
+</div>
+<button class="btn gold" style="margin-top:14px" onclick="doCustomerLogin()">Continue →</button>
+<div id="loginMsg"></div>
+</div>
+
+<div id="welcomeBar" class="hidden" style="display:flex;justify-content:space-between;align-items:center;background:#eaf7ef;border:1px solid #c9e6d4;border-radius:12px;padding:12px 16px;margin-bottom:16px">
+<div><b id="welcomeName"></b><div class="muted" id="welcomeMobile"></div></div>
+<div style="display:flex;gap:8px">
+<button class="btn ghost" style="width:auto;padding:8px 14px" onclick="toggleMyBookings()">📜 Meri Bookings</button>
+<button class="btn ghost" style="width:auto;padding:8px 14px" onclick="customerLogout()">Logout</button>
+</div>
+</div>
+
+<div id="myBookingsBox" class="hidden panel"></div>
+
+<div id="mainBookingArea" class="hidden">
+<div class="panel">
+<h3>Route Search Karein</h3>
+<div class="grid">
+<div><label>FROM (shahar)</label><input id="fromCity" list="cityList" placeholder="Agra" value="Agra"></div>
+<div><label>TO (shahar)</label><input id="toCity" list="cityList" placeholder="Delhi" value="Delhi"></div>
+</div>
+<button class="btn gold" style="margin-top:14px" onclick="doSearch()">🔍 Bus Search Karein</button>
+</div>
+
+<div id="searchResultBox"></div>
+
+<div id="bookingFlow" class="hidden">
+<div class="busbox">
+<h3 id="routeTitle">Agra → Delhi</h3>
+<div class="muted">🚌 AC Electric Seater (2+2) · 🕛 Departure: <b>12:00 PM</b> · ⏱ ~4h 30m · 💺 <span id="seatsLeftTxt">40 seats available</span></div>
+<div class="pricebox">
+<div><span class="fare strike" id="mrpFare">₹499</span><span class="fare" id="currentFare">₹399</span></div>
+<span class="tag">AC Seater</span><span class="tag">Electric</span>
+</div>
+</div>
+
+<div class="bargainToggle" onclick="toggleBargain()">
+<span style="font-size:22px">🤝</span>
+<div><b>Bargain Karke Discount Payein</b><div class="muted">Apna price offer karein, operator se seedha baat karein</div></div>
+</div>
+
+<div id="bargainBox" class="panel hidden">
+<h3>💬 Apna Offer Dein</h3>
+<label>AAP KITNE MEIN LENA CHAHTE HAIN? (₹/seat)</label>
+<input id="offerPrice" type="number" placeholder="e.g. 320">
+<div class="slider-row"><span>Minimum ₹250</span><span>MRP ₹499</span></div>
+<div style="margin-top:12px"><label>KOI KHAAS BAAT (optional) — jaise "regular customer hoon", "2 log hain" etc.</label>
+<textarea id="offerNote" rows="2" placeholder="Operator ko batana chahte hain kuch?"></textarea></div>
+</div>
+
+<div class="panel">
+<h3>Passenger Details</h3>
+<div class="grid">
+<div><label>NAAM</label><input id="pName" placeholder="Aapka naam"></div>
+<div><label>MOBILE</label><input id="pMobile" maxlength="10" inputmode="numeric" placeholder="10 digit mobile"></div>
+<div><label>PASSENGERS</label><input id="pCount" type="number" min="1" max="6" value="1"></div>
+<div><label>BOARDING POINT (<span id="fromLabel">Agra</span> mein)</label><select id="pPickup"></select></div>
+<div><label>DROPPING POINT (<span id="toLabel">Delhi</span> mein)</label><select id="pDrop"></select></div>
+</div>
+</div>
+
+<button class="btn gold" style="margin-top:18px" onclick="proceed()">🎫 Ticket Book Karein → WhatsApp Operator</button>
+<div id="resultBox"></div>
+</div>
+</div>
+</div>
+
+<div id="routesView" class="hidden">
+<div class="panel">
+<h3>➕ Naya Route Banayein / Edit Karein</h3>
+<button class="btn gold" style="margin-bottom:14px" onclick="loadMajorNuegoRoutes()">⚡ NUEGO ke Major Routes (All India) Load Karein</button>
+<div class="grid">
+<div><label>FROM (shahar)</label><input id="rFrom" list="cityList" placeholder="Agra"></div>
+<div><label>TO (shahar)</label><input id="rTo" list="cityList" placeholder="Delhi"></div>
+<div><label>BUS TIME</label><input id="rTime" placeholder="e.g. 12:00 PM"></div>
+<div><label>FARE (₹)</label><input id="rPrice" type="number" placeholder="399"></div>
+</div>
+<button class="btn green" style="margin-top:12px" onclick="saveRouteBasic()">✓ Route Save Karein</button>
+<div id="routeSaveMsg"></div>
+</div>
+
+<div id="pointsEditorBox" class="hidden">
+<div class="panel">
+<h3 id="pointsEditorTitle">Boarding & Dropping Points</h3>
+<div class="grid">
+<div class="pointbox" style="border:1px solid #e4dccf;border-radius:12px;padding:12px;background:#faf8f2">
+<b>Boarding Point Add Karein</b>
+<div style="margin-top:8px"><label>POINT NAME</label><input id="newPickupName" placeholder="e.g. Agra Fort Square"></div>
+<div style="margin-top:8px"><label>TIME</label><input id="newPickupTime" placeholder="e.g. 11:30 AM"></div>
+<button class="btn green" style="margin-top:10px" onclick="addPoint('pickup')">+ Boarding Point Add Karein</button>
+<div id="pickupPointsList" style="margin-top:10px"></div>
+</div>
+<div class="pointbox" style="border:1px solid #e4dccf;border-radius:12px;padding:12px;background:#faf8f2">
+<b>Dropping Point Add Karein</b>
+<div style="margin-top:8px"><label>POINT NAME</label><input id="newDropName" placeholder="e.g. Kashmere Gate ISBT"></div>
+<div style="margin-top:8px"><label>TIME</label><input id="newDropTime" placeholder="e.g. 04:30 PM"></div>
+<button class="btn green" style="margin-top:10px" onclick="addPoint('drop')">+ Dropping Point Add Karein</button>
+<div id="dropPointsList" style="margin-top:10px"></div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="panel">
+<h3>Sabhi Saved Routes</h3>
+<div id="routesList"></div>
+</div>
+</div>
+
+<div id="adminView" class="hidden">
+<div class="panel">
+<h3>📋 Sabhi Customer Inquiries</h3>
+<p class="muted">Jab bhi koi customer booking/bargain request bhejta hai, uski detail yahan save ho jaati hai. Yahan se dobara WhatsApp message bhej sakte hain.</p>
+<input id="inqFilter" oninput="renderInquiries()" placeholder="Search: naam, mobile, route" style="margin-bottom:12px">
+<button class="btn ghost" style="width:auto;padding:8px 14px;margin-bottom:12px" onclick="exportInquiriesCSV()">⬇ Export CSV</button>
+<div id="inquiryList"></div>
+</div>
+</div>
+
+</div></div>
+
+<div id="msgOverlay" class="hidden" style="position:fixed;inset:0;background:#0d352bcc;display:flex;align-items:center;justify-content:center;z-index:50;padding:16px">
+<div style="background:#fff;border-radius:16px;padding:22px;max-width:420px;width:100%">
+<h3 style="margin-top:0">Message Bhejein</h3>
+<p class="muted" id="msgToWhom"></p>
+<textarea id="msgText" rows="5" style="margin-top:8px"></textarea>
+<div style="display:flex;gap:8px;margin-top:12px">
+<button class="btn ghost" onclick="closeMsgModal()">Cancel</button>
+<a class="btn green" id="msgSendLink" target="_blank" style="text-decoration:none;text-align:center" onclick="closeMsgModal()">📲 WhatsApp par Bhejein</a>
+</div>
+</div>
+</div>
+<datalist id="cityList">
+<option value="Agra"><option value="Delhi"><option value="Jaipur"><option value="Gurugram"><option value="Noida"><option value="Mathura"><option value="Lucknow"><option value="Kanpur"><option value="Dehradun"><option value="Haridwar"><option value="Chandigarh"><option value="Bhopal"><option value="Indore"><option value="Bangalore"><option value="Chennai"><option value="Hyderabad"><option value="Pune"><option value="Mumbai"><option value="Varanasi"><option value="Rishikesh">
+</datalist>
+
+<script>
+const OPERATOR_WHATSAPP="919807094576"; // bus operator ka number
+const MRP=499, DEFAULT_FARE=399, MIN_OFFER=250;
+let bargainOpen=false;
+
+/* ================= CUSTOMER LOGIN ================= */
+function getCustomers(){return JSON.parse(localStorage.getItem("nuegoCustomers")||"[]")}
+function saveCustomer(c){
+let list=getCustomers();
+let existing=list.find(x=>x.mobile===c.mobile);
+if(existing)Object.assign(existing,c);else list.push(c);
+localStorage.setItem("nuegoCustomers",JSON.stringify(list));
+}
+function currentSession(){return JSON.parse(localStorage.getItem("nuegoCustomerSession")||"null")}
+
+document.getElementById("loginMobile").addEventListener("input",function(){
+if(this.value.length===10){
+let existing=getCustomers().find(c=>c.mobile===this.value);
+document.getElementById("loginNameBox").classList.toggle("hidden",!!existing);
+}else{
+document.getElementById("loginNameBox").classList.add("hidden");
+}
+});
+
+function doCustomerLogin(){
+let mobile=document.getElementById("loginMobile").value.trim();
+if(!/^\d{10}$/.test(mobile)){document.getElementById("loginMsg").innerHTML='<p style="color:#c94a36;font-size:13px;margin-top:8px">10-digit mobile number sahi se daalein.</p>';return}
+let existing=getCustomers().find(c=>c.mobile===mobile);
+let name;
+if(existing){
+name=existing.name;
+}else{
+name=document.getElementById("loginName").value.trim();
+if(!name){document.getElementById("loginNameBox").classList.remove("hidden");document.getElementById("loginMsg").innerHTML='<p style="color:#c94a36;font-size:13px;margin-top:8px">Pehli baar aa rahe hain — apna naam bhi likh dein.</p>';return}
+saveCustomer({mobile,name,createdAt:new Date().toLocaleString("en-IN")});
+}
+localStorage.setItem("nuegoCustomerSession",JSON.stringify({mobile,name}));
+loadCustomerSession();
+}
+
+function loadCustomerSession(){
+let s=currentSession();
+if(!s){
+document.getElementById("loginGate").classList.remove("hidden");
+document.getElementById("welcomeBar").classList.add("hidden");
+document.getElementById("mainBookingArea").classList.add("hidden");
+document.getElementById("myBookingsBox").classList.add("hidden");
+return;
+}
+document.getElementById("loginGate").classList.add("hidden");
+document.getElementById("welcomeBar").classList.remove("hidden");
+document.getElementById("mainBookingArea").classList.remove("hidden");
+document.getElementById("welcomeName").textContent=`👋 Namaste, ${s.name}`;
+document.getElementById("welcomeMobile").textContent=s.mobile;
+if(document.getElementById("pName")){document.getElementById("pName").value=s.name;document.getElementById("pMobile").value=s.mobile;}
+}
+
+function customerLogout(){
+localStorage.removeItem("nuegoCustomerSession");
+document.getElementById("loginMobile").value="";
+document.getElementById("loginName").value="";
+document.getElementById("loginNameBox").classList.add("hidden");
+loadCustomerSession();
+}
+
+function toggleMyBookings(){
+let box=document.getElementById("myBookingsBox");
+let showing=!box.classList.contains("hidden");
+if(showing){box.classList.add("hidden");return}
+let s=currentSession();if(!s)return;
+let mine=getInquiries().filter(x=>x.mobile===s.mobile).reverse();
+box.innerHTML=`<h3>📜 Meri Bookings</h3>`+(mine.length?mine.map(x=>`
+<div class="busbox" style="margin-bottom:10px">
+<b>${x.route}</b> · <span class="muted">${x.time}</span><br>
+<span class="muted">${x.count} pax · Boarding: ${x.pickup}${x.drop?" · Drop: "+x.drop:""}</span><br>
+${x.offer?`<span class="tag" style="background:#fdeecb;color:#8a5b12">Offer diya: ₹${x.offer}/seat</span>`:""}
+<div class="muted" style="margin-top:4px">🕐 ${x.createdAt}</div>
+</div>`).join(""):`<p class="muted">Abhi koi booking nahi ki hai.</p>`);
+box.classList.remove("hidden");
+}
+
+loadCustomerSession();
+
+const pointsByCity={
+"Agra":["Agra Fort Square, Rakabganj","New Sanjay Travels, Idgah Bus Stand","NueGo Lounge, Kuberpur Cut","Northern Travels, Water Works Flyover"],
+"Delhi":["Sarai Kale Khan ISBT","Kashmere Gate ISBT","Anand Vihar ISBT","Red Line Metro Point"],
+"Jaipur":["Jaipur Bus Stand","Sindhi Camp ISBT","Tonk Road Toll Naka"],
+"Gurugram":["Gurugram Bus Stand, Sector 29","IFFCO Chowk"],
+"Noida":["Noida Sector 62 Bus Stand","Noida City Centre"],
+"Mathura":["Mathura Bus Stand","New Bus Stand, Mathura"],
+"Lucknow":["Alambagh Bus Stand","Charbagh Bus Stand"],
+"Kanpur":["Jhakarkati Bus Stand"],
+"Dehradun":["Dehradun ISBT"],
+"Haridwar":["Haridwar Bus Stand"],
+"Chandigarh":["Sector 17 ISBT","Sector 43 ISBT"],
+"Bhopal":["Bhopal ISBT, Habibganj"],
+"Indore":["Indore Sarwate Bus Stand"],
+"Bangalore":["Majestic Bus Stand","Bangalore Satellite Bus Stand"],
+"Chennai":["Chennai CMBT"],
+"Hyderabad":["Hyderabad MGBS","JBS Jubilee Bus Station"],
+"Pune":["Pune Shivaji Nagar Bus Stand"],
+"Mumbai":["Mumbai Central Bus Stand"],
+"Varanasi":["Varanasi Cantt Bus Stand"],
+"Rishikesh":["Rishikesh Bus Stand"]
+};
+function pointsFor(city){
+let key=Object.keys(pointsByCity).find(k=>k.toLowerCase()===city.trim().toLowerCase());
+return key?pointsByCity[key]:[city.trim()?city.trim()+" Main Bus Stand":"Boarding point","City ISBT"];
+}
+
+let activeRouteData=null;
+
+function doSearch(){
+let from=fromCity.value.trim()||"Agra", to=toCity.value.trim()||"Delhi";
+gaEvent('route_search',{from,to});
+document.getElementById("bookingFlow").classList.add("hidden");
+let match=findRoute(from,to);
+activeRouteData=match||{from,to,time:"12:00 PM",price:399,pickup:pointsFor(from).map(n=>({name:n,time:""})),drop:pointsFor(to).map(n=>({name:n,time:""}))};
+let r=activeRouteData;
+document.getElementById("searchResultBox").innerHTML=`
+<div class="busbox" style="margin-top:16px">
+<h3>${r.from} → ${r.to}</h3>
+<div class="muted">🚌 AC Electric Seater (2+2) · 🕛 Departure: <b>${r.time}</b> · 💺 40 seats available</div>
+<div class="pricebox">
+<div><span class="fare strike">₹${Math.round(r.price*1.25)}</span><span class="fare">₹${r.price}</span></div>
+<span class="tag">AC Seater</span><span class="tag">Electric</span>
+</div>
+<button class="btn green" style="margin-top:12px" onclick="quickConnect()">📲 WhatsApp par Operator se Connect Karein</button>
+<button class="btn ghost" style="margin-top:8px" onclick="selectBus()">⚙ Passengers / Boarding Point Customize Karein</button>
+</div>`;
+}
+
+function gaEvent(name,params){try{if(typeof gtag==="function")gtag('event',name,params||{});}catch(e){}}
+
+function quickConnect(){
+gaEvent('whatsapp_connect_click',{route:activeRouteData.from+' to '+activeRouteData.to});
+let s=currentSession();
+if(!s){alert("Pehle Customer Login karein.");return}
+let r=activeRouteData;
+let pickup=r.pickup[0]?r.pickup[0].name:"Not set", drop=r.drop[0]?r.drop[0].name:"Not set";
+let waText=`🎫 *NUEGO Ticket Request*\n\nRoute: ${r.from} → ${r.to}\nDeparture: ${r.time}\nBoarding Point: ${pickup}\nDropping Point: ${drop}\nPassenger: ${s.name}\nMobile: ${s.mobile}\nSeats: 1\nStandard Fare: ₹${r.price}/seat\n\nKripya booking confirm karein.`;
+let wa=`https://wa.me/${OPERATOR_WHATSAPP}?text=${encodeURIComponent(waText)}`;
+saveInquiry({name:s.name,mobile:s.mobile,route:`${r.from} → ${r.to}`,time:r.time,pickup,drop,count:1,offer:null,note:"",createdAt:new Date().toLocaleString("en-IN")});
+window.open(wa,"_blank");
+document.getElementById("searchResultBox").insertAdjacentHTML("beforeend",`<div class="success">✓ Request bhej di gayi hai. WhatsApp khul gaya hoga — operator se seedha baat karein.</div>`);
+}
+
+function selectBus(){
+let r=activeRouteData;
+document.getElementById("routeTitle").textContent=`${r.from} → ${r.to}`;
+document.getElementById("fromLabel").textContent=r.from;
+document.getElementById("toLabel").textContent=r.to;
+document.getElementById("pPickup").innerHTML=(r.pickup.length?r.pickup:[{name:"Not set"}]).map(p=>`<option>${p.name}${p.time?" ("+p.time+")":""}</option>`).join("");
+document.getElementById("pDrop").innerHTML=(r.drop.length?r.drop:[{name:"Not set"}]).map(p=>`<option>${p.name}${p.time?" ("+p.time+")":""}</option>`).join("");
+document.getElementById("mrpFare").textContent="₹"+Math.round(r.price*1.25);
+document.getElementById("currentFare").textContent="₹"+r.price;
+document.getElementById("bookingFlow").classList.remove("hidden");
+document.getElementById("bookingFlow").scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+function toggleBargain(){
+bargainOpen=!bargainOpen;
+document.getElementById("bargainBox").classList.toggle("hidden",!bargainOpen);
+if(!bargainOpen){document.getElementById("currentFare").textContent="₹"+activeRouteData.price;}
+}
+
+function proceed(){
+let name=pName.value.trim(),mobile=pMobile.value.trim(),count=Number(pCount.value)||1,pickup=pPickup.value,drop=pDrop.value;
+let r=activeRouteData;
+if(!name||!/^\d{10}$/.test(mobile)){alert("Naam aur 10-digit mobile number sahi se bharein.");return}
+gaEvent('ticket_book_click',{route:r.from+' to '+r.to,bargain:bargainOpen});
+
+let offer=null,note="";
+if(bargainOpen){
+offer=Number(document.getElementById("offerPrice").value);
+note=document.getElementById("offerNote").value.trim();
+if(!offer||offer<MIN_OFFER){alert(`Offer price kam se kam ₹${MIN_OFFER} rakhein.`);return}
+if(offer>=r.price*1.25){alert("Offer standard fare se kam hona chahiye, tabhi bargain ka fayda hoga.");return}
+}
+
+let baseText=`🎫 *NUEGO Ticket Request*\n\nRoute: ${r.from} → ${r.to}\nDeparture: ${r.time}\nBoarding Point: ${pickup}\nDropping Point: ${drop}\nPassenger: ${name}\nMobile: ${mobile}\nSeats: ${count}\nStandard Fare: ₹${r.price}/seat`;
+
+let waText;
+if(offer){
+waText=baseText+`\n\n🤝 *Bargain Request*\nCustomer ka offer: ₹${offer}/seat (Total: ₹${offer*count})\n${note?"Note: "+note+"\n":""}\nKripya confirm karein ki yeh price accept hai ya counter-offer dein.`;
+}else{
+waText=baseText+`\n\nKripya booking confirm karein.`;
+}
+
+let wa=`https://wa.me/${OPERATOR_WHATSAPP}?text=${encodeURIComponent(waText)}`;
+
+saveInquiry({name,mobile,route:`${r.from} → ${r.to}`,time:r.time,pickup,drop,count,offer,note,createdAt:new Date().toLocaleString("en-IN")});
+
+resultBox.innerHTML=`<div class="success">
+<b>✓ Request ready ho gayi hai, aapki details save ho gayi hain.</b><br>
+${offer?`Aapne ₹${offer}/seat ka offer diya hai (MRP ₹${MRP}). Operator WhatsApp par reply karke price finalize karega.`:`Aapki booking details operator ko bheji ja rahi hain.`}
+</div>
+<a class="btn green" style="display:block;text-align:center;text-decoration:none;margin-top:12px" target="_blank" href="${wa}">📲 Operator se WhatsApp par Baat Karein</a>
+<p class="muted" style="margin-top:10px">Bus operator isi WhatsApp chat mein aapko final price bata dega. Final confirmation ke baad hi seat lock hogi.</p>
+<button class="btn ghost" style="margin-top:12px" onclick="resetFlow()">← Nayi Route Search Karein</button>`;
+}
+
+function resetFlow(){
+document.getElementById("bookingFlow").classList.add("hidden");
+document.getElementById("searchResultBox").innerHTML="";
+document.getElementById("resultBox").innerHTML="";
+window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* ================= SAVE / VIEW INQUIRIES ================= */
+function getInquiries(){return JSON.parse(localStorage.getItem("leafyInquiries")||"[]")}
+function saveInquiry(inq){
+let list=getInquiries();
+let existing=list.find(x=>x.mobile===inq.mobile);
+if(existing)Object.assign(existing,inq);else list.push(inq);
+localStorage.setItem("leafyInquiries",JSON.stringify(list));
+}
+
+function showView(id){
+document.getElementById("customerView").classList.toggle("hidden",id!=="customer");
+document.getElementById("routesView").classList.toggle("hidden",id!=="routes");
+document.getElementById("adminView").classList.toggle("hidden",id!=="admin");
+["tabCustomerBtn","tabRouteBtn","tabAdminBtn"].forEach(btnId=>{
+document.getElementById(btnId).className=(btnId==="tabCustomerBtn"&&id==="customer")||(btnId==="tabRouteBtn"&&id==="routes")||(btnId==="tabAdminBtn"&&id==="admin")?"btn gold":"btn ghost";
+document.getElementById(btnId).style.width="auto";document.getElementById(btnId).style.padding="10px 16px";
+});
+if(id==="admin")renderInquiries();
+if(id==="routes")renderRoutesAdmin();
+}
+
+/* ================= ROUTE MANAGER (ADMIN) ================= */
+function getRoutes(){return JSON.parse(localStorage.getItem("nuegoRoutes")||"null")||seedRoutesDefault()}
+function seedRoutesDefault(){
+let seeded=[{from:"Agra",to:"Delhi",time:"12:00 PM",price:399,
+pickup:[{name:"Agra Fort Square, Rakabganj",time:"11:20 AM"},{name:"New Sanjay Travels, Idgah Bus Stand",time:"11:35 AM"},{name:"NueGo Lounge, Kuberpur Cut",time:"11:50 AM"},{name:"Northern Travels, Water Works Flyover",time:"12:00 PM"}],
+drop:[{name:"Sarai Kale Khan ISBT",time:"04:20 PM"},{name:"Kashmere Gate ISBT",time:"04:35 PM"},{name:"Anand Vihar ISBT",time:"04:50 PM"},{name:"Red Line Metro Point",time:"05:00 PM"}]}];
+localStorage.setItem("nuegoRoutes",JSON.stringify(seeded));
+return seeded;
+}
+function persistRoutesData(list){localStorage.setItem("nuegoRoutes",JSON.stringify(list))}
+function findRoute(from,to){
+let list=getRoutes();
+return list.find(r=>r.from.toLowerCase()===from.trim().toLowerCase()&&r.to.toLowerCase()===to.trim().toLowerCase());
+}
+
+let editingRouteIdx=null;
+
+function saveRouteBasic(){
+let from=rFrom.value.trim(),to=rTo.value.trim(),time=rTime.value.trim()||"12:00 PM",price=Number(rPrice.value)||399;
+if(!from||!to){alert("From aur To shahar bharein.");return}
+let list=getRoutes();
+let idx=list.findIndex(r=>r.from.toLowerCase()===from.toLowerCase()&&r.to.toLowerCase()===to.toLowerCase());
+if(idx>-1){list[idx].time=time;list[idx].price=price;}
+else{list.push({from,to,time,price,pickup:[],drop:[]});idx=list.length-1;}
+persistRoutesData(list);
+editingRouteIdx=idx;
+routeSaveMsg.innerHTML='<div class="success">✓ Route save ho gaya. Ab neeche boarding/dropping points add karein.</div>';
+document.getElementById("pointsEditorBox").classList.remove("hidden");
+document.getElementById("pointsEditorTitle").textContent=`Boarding & Dropping Points — ${from} → ${to}`;
+renderPointsEditor();
+renderRoutesAdmin();
+}
+
+function addPoint(type){
+if(editingRouteIdx===null){alert("Pehle upar route save karein.");return}
+let list=getRoutes();
+let route=list[editingRouteIdx];
+if(type==="pickup"){
+let name=newPickupName.value.trim(),time=newPickupTime.value.trim();
+if(!name||!time)return alert("Point name aur time dono bharein.");
+route.pickup.push({name,time});
+newPickupName.value="";newPickupTime.value="";
+}else{
+let name=newDropName.value.trim(),time=newDropTime.value.trim();
+if(!name||!time)return alert("Point name aur time dono bharein.");
+route.drop.push({name,time});
+newDropName.value="";newDropTime.value="";
+}
+persistRoutesData(list);
+renderPointsEditor();
+renderRoutesAdmin();
+}
+
+function deletePoint(type,idx){
+let list=getRoutes();
+let route=list[editingRouteIdx];
+route[type].splice(idx,1);
+persistRoutesData(list);
+renderPointsEditor();
+renderRoutesAdmin();
+}
+
+function renderPointsEditor(){
+if(editingRouteIdx===null)return;
+let route=getRoutes()[editingRouteIdx];
+document.getElementById("pickupPointsList").innerHTML=route.pickup.map((p,i)=>`<div class="muted" style="display:flex;justify-content:space-between;padding:4px 0">📍 ${p.name} · ⏰ ${p.time}<button class="danger" onclick="deletePoint('pickup',${i})">✕</button></div>`).join("")||`<p class="muted">Abhi koi boarding point nahi hai.</p>`;
+document.getElementById("dropPointsList").innerHTML=route.drop.map((p,i)=>`<div class="muted" style="display:flex;justify-content:space-between;padding:4px 0">🏁 ${p.name} · ⏰ ${p.time}<button class="danger" onclick="deletePoint('drop',${i})">✕</button></div>`).join("")||`<p class="muted">Abhi koi dropping point nahi hai.</p>`;
+}
+
+function editRoute(idx){
+let route=getRoutes()[idx];
+rFrom.value=route.from;rTo.value=route.to;rTime.value=route.time;rPrice.value=route.price;
+editingRouteIdx=idx;
+document.getElementById("pointsEditorBox").classList.remove("hidden");
+document.getElementById("pointsEditorTitle").textContent=`Boarding & Dropping Points — ${route.from} → ${route.to}`;
+renderPointsEditor();
+document.getElementById("pointsEditorBox").scrollIntoView({behavior:"smooth"});
+}
+
+function deleteRoute(idx){
+if(!confirm("Yeh route delete karein?"))return;
+let list=getRoutes();
+list.splice(idx,1);
+persistRoutesData(list);
+if(editingRouteIdx===idx){editingRouteIdx=null;document.getElementById("pointsEditorBox").classList.add("hidden");}
+renderRoutesAdmin();
+}
+
+function renderRoutesAdmin(){
+let list=getRoutes();
+document.getElementById("routesList").innerHTML=list.length?list.map((r,i)=>`
+<div class="busbox" style="margin-bottom:10px">
+<b>${r.from} → ${r.to}</b> · <span class="muted">🕛 ${r.time} · ₹${r.price}</span><br>
+<span class="muted">📍 Boarding: ${r.pickup.length} point(s) · 🏁 Dropping: ${r.drop.length} point(s)</span><br>
+<button class="btn ghost" style="width:auto;padding:7px 12px;margin-top:8px" onclick="editRoute(${i})">✏ Points Edit Karein</button>
+<button class="danger" onclick="deleteRoute(${i})" style="margin-left:6px">✕ Route Delete Karein</button>
+</div>`).join(""):`<p class="muted">Abhi koi route saved nahi hai.</p>`;
+}
+
+function loadMajorNuegoRoutes(){
+const majorRoutes=[
+["Agra","Delhi",399,"Agra Bus Stand","Anand Vihar ISBT, Delhi"],
+["Delhi","Dehradun",699,"Anand Vihar ISBT, Delhi","Dehradun ISBT"],
+["Delhi","Haridwar",599,"Kashmere Gate ISBT, Delhi","Haridwar Bus Stand"],
+["Delhi","Rishikesh",649,"Kashmere Gate ISBT, Delhi","Rishikesh Bus Stand"],
+["Delhi","Jaipur",549,"Dhaula Kuan, Delhi","Sindhi Camp ISBT, Jaipur"],
+["Delhi","Chandigarh",599,"Kashmere Gate ISBT, Delhi","Sector 17 ISBT, Chandigarh"],
+["Delhi","Lucknow",899,"Anand Vihar ISBT, Delhi","Alambagh Bus Stand, Lucknow"],
+["Mathura","Delhi",349,"Mathura Bus Stand","Kashmere Gate ISBT, Delhi"],
+["Bhopal","Indore",349,"Habibganj ISBT, Bhopal","Sarwate Bus Stand, Indore"],
+["Chennai","Pondicherry",399,"CMBT, Chennai","Pondicherry Bus Stand"],
+["Chennai","Tirupati",449,"CMBT, Chennai","Tirupati Bus Stand"],
+["Chennai","Salem",499,"CMBT, Chennai","Salem Bus Stand"],
+["Hyderabad","Vijayawada",549,"MGBS, Hyderabad","Vijayawada Bus Stand"],
+["Hyderabad","Guntur",549,"JBS Jubilee, Hyderabad","Guntur Bus Stand"],
+["Bangalore","Chennai",699,"Majestic Bus Stand, Bangalore","CMBT, Chennai"],
+["Bangalore","Coimbatore",599,"Majestic Bus Stand, Bangalore","Gandhipuram Bus Stand, Coimbatore"],
+["Bangalore","Mysore",349,"Majestic Bus Stand, Bangalore","Mysore Bus Stand"],
+["Jaipur","Kota",449,"Sindhi Camp ISBT, Jaipur","Kota Bus Stand"],
+["Gurugram","Jaipur",549,"Gurugram Bus Stand","Sindhi Camp ISBT, Jaipur"],
+["Amritsar","Delhi",699,"Amritsar Bus Stand","Kashmere Gate ISBT, Delhi"],
+["Coimbatore","Madurai",399,"Gandhipuram Bus Stand, Coimbatore","Mattuthavani Bus Stand, Madurai"]
+];
+let list=getRoutes();
+majorRoutes.forEach(([from,to,price,pStop,dStop])=>{
+let idx=list.findIndex(r=>r.from.toLowerCase()===from.toLowerCase()&&r.to.toLowerCase()===to.toLowerCase());
+let data={from,to,time:"12:00 PM",price,pickup:[{name:pStop,time:""}],drop:[{name:dStop,time:""}]};
+if(idx>-1){if(!list[idx].pickup.length)list[idx].pickup=data.pickup;if(!list[idx].drop.length)list[idx].drop=data.drop;}
+else list.push(data);
+});
+persistRoutesData(list);
+renderRoutesAdmin();
+alert(`${majorRoutes.length} major NUEGO routes load ho gaye (generic boarding/dropping point ke saath). Har route ko khol kar exact points/time edit kar sakte hain.`);
+}
+
+function renderInquiries(){
+let q=(document.getElementById("inqFilter").value||"").toLowerCase();
+let list=getInquiries().filter(x=>(x.name+x.mobile+x.route).toLowerCase().includes(q)).reverse();
+document.getElementById("inquiryList").innerHTML=list.length?list.map((x,i)=>`
+<div class="busbox" style="margin-bottom:10px">
+<b>${x.name}</b> · <span class="muted">${x.mobile}</span><br>
+<span class="muted">${x.route} · ${x.time} · ${x.count} pax · Boarding: ${x.pickup}${x.drop?" · Drop: "+x.drop:""}</span><br>
+${x.offer?`<span class="tag" style="background:#fdeecb;color:#8a5b12">Offer: ₹${x.offer}/seat</span>`:""}
+${x.note?`<div class="muted" style="margin-top:4px">📝 ${x.note}</div>`:""}
+<div class="muted" style="margin-top:4px">🕐 ${x.createdAt}</div>
+<button class="btn gold" style="width:auto;padding:8px 14px;margin-top:8px" onclick='openMsgModal(${JSON.stringify(x.mobile)},${JSON.stringify(x.name)})'>📲 Message Bhejein</button>
+</div>`).join(""):`<p class="muted">Abhi koi inquiry nahi hai.</p>`;
+}
+
+function exportInquiriesCSV(){
+let list=getInquiries();
+if(!list.length){alert("Export karne ke liye koi inquiry nahi hai.");return}
+let headers=["name","mobile","route","time","pickup","count","offer","note","createdAt"];
+let rows=list.map(x=>headers.map(h=>`"${(x[h]||"").toString().replace(/"/g,'""')}"`).join(","));
+let blob=new Blob([headers.join(",")+"\n"+rows.join("\n")],{type:"text/csv"});
+let url=URL.createObjectURL(blob);let a=document.createElement("a");a.href=url;a.download="leafybus_inquiries.csv";a.click();URL.revokeObjectURL(url);
+}
+
+function openMsgModal(mobile,name){
+document.getElementById("msgToWhom").textContent=`${name} (${mobile}) ko message bhej rahe hain:`;
+document.getElementById("msgText").value=`Namaste ${name}, NUEGO se. Aapki Agra → Delhi ki booking/inquiry ke baare mein baat karni thi. Kya aap abhi bhi travel karna chahte hain?`;
+document.getElementById("msgOverlay").classList.remove("hidden");
+document.getElementById("msgSendLink").href=`https://wa.me/91${mobile}?text=${encodeURIComponent(document.getElementById("msgText").value)}`;
+document.getElementById("msgText").oninput=function(){document.getElementById("msgSendLink").href=`https://wa.me/91${mobile}?text=${encodeURIComponent(this.value)}`};
+}
+function closeMsgModal(){document.getElementById("msgOverlay").classList.add("hidden")}
+</script>
+</body></html>
